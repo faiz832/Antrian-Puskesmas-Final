@@ -1,0 +1,152 @@
+CREATE DATABASE antri;
+
+CREATE TABLE Dokter (
+  ID_Dokter INT PRIMARY KEY AUTO_INCREMENT,
+  Nama_D VARCHAR(50),
+  Spesialis VARCHAR(20),
+  Jadwal VARCHAR(30)
+);
+
+CREATE TABLE Pasien (
+  ID_Pasien INT PRIMARY KEY AUTO_INCREMENT,
+  NIK INT(20),
+  Nama_P VARCHAR(50),
+  Alamat VARCHAR(50),
+  Domisili VARCHAR(50),
+  Tgl_lahir DATE,
+  No_HP VARCHAR(14),
+  Jenis_Kelamin ENUM('L', 'P'),
+  KTP_KK VARCHAR(50)
+);
+
+CREATE TABLE Resepsionis (
+  ID_Resepsionis INT PRIMARY KEY AUTO_INCREMENT,
+  Nama_R VARCHAR(50)
+);
+
+CREATE TABLE Antrian (
+  ID_Antrian INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Resepsionis INT,
+  ID_Pasien INT,
+  ID_Dokter INT,
+  Tgl_Antrian DATE,
+  Status ENUM('Menunggu', 'Diperiksa', 'Selesai')
+);
+
+CREATE TABLE Antrian2 (
+  ID_Antrian INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Resepsionis INT,
+  ID_Pasien INT,
+  ID_Dokter INT,
+  Tgl_Antrian DATE,
+  Status ENUM('Menunggu', 'Diperiksa', 'Selesai')
+);
+
+CREATE TABLE Antrian3 (
+  ID_Antrian INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Resepsionis INT,
+  ID_Pasien INT,
+  ID_Dokter INT,
+  Tgl_Antrian DATE,
+  Status ENUM('Menunggu', 'Diperiksa', 'Selesai')
+);
+
+
+=====================================
+=====================================
+=====================================
+=====================================
+=====================================
+
+
+
+
+CREATE TABLE Antrian_copy (
+  ID_Antrian INT PRIMARY KEY AUTO_INCREMENT,
+  ID_Resepsionis INT,
+  ID_Pasien INT,
+  ID_Dokter INT,
+  Tgl_Antrian DATE,
+  Status ENUM('Menunggu', 'Diperiksa', 'Selesai')
+);
+
+
+CREATE TABLE Antrian_copy LIKE Antrian;
+
+CREATE TABLE Antrian_copy AS SELECT * FROM Antrian;
+
+INSERT INTO Antrian SELECT * FROM Antrian WHERE ID_Antrian NOT IN (SELECT ID_Antrian FROM Antrian_copy);
+
+UPDATE Antrian SET ID_Antrian = (CASE 
+WHEN ID_Antrian = 5 THEN 6 
+WHEN ID_Antrian = 4 THEN 7
+WHEN ID_Antrian = 3 THEN 8
+WHEN ID_Antrian = 2 THEN 9
+WHEN ID_Antrian = 1 THEN 10 
+ELSE ID_Antrian
+END);
+
+UPDATE Antrian SET ID_Antrian = (CASE 
+WHEN ID_Antrian = 6 THEN 5 
+WHEN ID_Antrian = 7 THEN 4
+WHEN ID_Antrian = 8 THEN 3
+WHEN ID_Antrian = 9 THEN 2
+WHEN ID_Antrian = 10 THEN 1 
+ELSE ID_Antrian
+END);
+
+
+
+
+
+
+
+
+
+
+
+
+UPDATE Antrian SET ID_Antrian = (CASE 
+WHEN ID_Antrian = 5 THEN 1
+WHEN ID_Antrian = 4 THEN 5
+WHEN ID_Antrian = 3 THEN 4
+WHEN ID_Antrian = 2 THEN 3
+WHEN ID_Antrian = 1 THEN 2 
+ELSE ID_Antrian
+END);
+
+
+
+ALTER TABLE Antrian DROP PRIMARY KEY;
+
+ALTER TABLE Antrian DROP CONSTRAINT ID_Antrian;
+
+describe Antrian;
+
+UPDATE Antrian SET ID_Antrian = (CASE 
+WHEN ID_Antrian = $idAntrian THEN $urutan 
+WHEN ID_Antrian >= $urutan AND ID_Antrian <= $idAntrian THEN ID_Antrian + 1 
+ELSE ID_Antrian 
+END);
+
+ALTER TABLE Antrian ADD PRIMARY KEY (ID_Antrian);
+
+
+
+
+string(54) "UPDATE Antrian SET ID_Antrian = 4 WHERE ID_Antrian = 5"
+string(54) "UPDATE Antrian SET ID_Antrian = 3 WHERE ID_Antrian = 4"
+string(54) "UPDATE Antrian SET ID_Antrian = 2 WHERE ID_Antrian = 3"
+string(54) "UPDATE Antrian SET ID_Antrian = 1 WHERE ID_Antrian = 2"
+
+
+
+
+
+
+
+
+
+
+
+
